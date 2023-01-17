@@ -5,28 +5,26 @@ import axios from "axios";
 
 function App() {
   const [islogined, setIsLogined] = useState(false);
+  const [nickName, setNickName] = useState("");
 
   useEffect(() => {
     const checkLogined = async () => {
-      const nickname = sessionStorage.getItem('nickname');
-      await axios.post("http://localhost:5000/login/check",{
-        nickname: nickname
-      })
-      .then(({data})=>{
-        const {islogined} = data;
-        setIsLogined(islogined);
+      await axios.get("http://localhost:5000/login/check")
+      .then(({data}) => {
+          setIsLogined(data.isLogined);
+          setNickName(data.nickname);
       })
       .catch((err)=>{
-        console.log(err);
+          console.log(err);
       })
     }
     checkLogined();
-  });
+  }, [islogined, nickName]);
 
   return (
     <div style={{display: 'flex'}}>
       <Main/>
-      <LoginPage islogined={islogined} setIsLogined={setIsLogined}/>
+      <LoginPage islogined={islogined} setIsLogined={setIsLogined} nickName={nickName} setNickName={setNickName}/>
     </div>
   );
 }

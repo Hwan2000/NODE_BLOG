@@ -3,16 +3,24 @@ const path = require('path');
 const cors = require('cors');
 const { sequelize } = require('./models');
 const memberRouter = require('./routers/member');
+const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
 const app = express();
 
 const PORT = process.env.port || 5000;
 
-app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+    methods: ["GET", "POST"],
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 app.use('/login', memberRouter);
 

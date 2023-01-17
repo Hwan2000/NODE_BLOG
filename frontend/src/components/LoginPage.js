@@ -1,7 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
 
-const LoginPage = ({islogined, setIsLogined}) => {
+axios.defaults.withCredentials = true;
+
+const LoginPage = ({islogined, setIsLogined, nickName, setNickName}) => {
 
     const [user,setUser] = useState({email:"",password:""});
     const [error,setError] = useState("");
@@ -13,10 +15,10 @@ const LoginPage = ({islogined, setIsLogined}) => {
         })
         .then(({data})=>{
             const {message, nickname} = data;
-            if(message!==''){
+            if(nickname===''){
                 setError(message);
             } else {
-                sessionStorage.setItem("nickname", nickname);
+                setNickName(nickname);
                 setIsLogined(true);
                 setError("");
             }
@@ -26,26 +28,39 @@ const LoginPage = ({islogined, setIsLogined}) => {
         })
     }
 
-    const logout = () =>{
-        sessionStorage.removeItem('nickname');
-        setError("");
-        setUser({email:"",password:""});
-        setIsLogined(false);
+    const logOut = async (e) =>{
+        e.preventDefault();
+        await axios.get("http://localhost:5000/login/out",{withCredentials:true})
+        .then(()=>{
+            setNickName("");
+            setIsLogined(false);
+            setError("");
+            setUser({email:"",password:""});
+        })
+        .catch((err)=>{
+            console.log(err);
+        })   
     }
 
     return(
         <div>
-            {islogined ? <><button type="submit" onClick={logout}>logout</button> <br/> <p>hello {sessionStorage.getItem('nickname')}</p></> : 
-            <><form>
-                <label>Email:</label>
-                <input type="email" value={user.email} onChange={(e)=>setUser({...user, email:e.target.value})}/>
-                <br/>
-                <label>password:</label>
-                <input type="password" value={user.password} onChange={(e)=>setUser({...user,password:e.target.value})}/>
-                <br/>
-                <button type="submit" onClick={onSubmitHandler}>Submit</button>
-            </form>
-            <p>{error}</p>
+            {islogined ? 
+            <>
+                <p>hello {nickName}</p>
+                <button type="submit" onClick={logOut}>logout</button>
+            </>
+                : 
+            <>
+                <form>
+                    <label>Email:</label>
+                    <input type="email" value={user.email} onChange={(e)=>setUser({...user, email:e.target.value})}/>
+                    <br/>
+                    <label>password:</label>
+                    <input type="password" value={user.password} onChange={(e)=>setUser({...user,password:e.target.value})}/>
+                    <br/>
+                    <button type="submit" onClick={onSubmitHandler}>Submit</button>
+                </form>
+                <p>{error}</p>
             </>}
         </div>
     )
