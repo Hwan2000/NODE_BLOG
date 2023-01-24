@@ -1,15 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState, useMemo } from "react";
 import LoginPage from "./components/LoginPage";
 import Main from "./components/Main";
 import axios from "axios";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
   const [islogined, setIsLogined] = useState(false);
-  const [nickName, setNickName] = useState("");
+  const [nickName, setNickName] = useState("unknown");
 
-  useEffect(() => {
+  useMemo(() => {
     const checkLogined = async () => {
-      await axios.get("http://localhost:5000/login/check")
+      await axios.get("http://localhost:5000/loginapi/check")
       .then(({data}) => {
           setIsLogined(data.isLogined);
           setNickName(data.nickname);
@@ -19,12 +20,15 @@ function App() {
       })
     }
     checkLogined();
-  }, [islogined, nickName]);
+  }, []);
 
   return (
-    <div style={{display: 'flex'}}>
-      <Main/>
-      <LoginPage islogined={islogined} setIsLogined={setIsLogined} nickName={nickName} setNickName={setNickName}/>
+    <div>
+      <Routes>
+        <Route path="/" element={<Main islogined={islogined} setIsLogined={setIsLogined} nickName={nickName} setNickName={setNickName}/>}/>
+        <Route path="/login" element={<LoginPage islogined={islogined} setIsLogined={setIsLogined} nickName={nickName} setNickName={setNickName}/>}/>
+        <Route path="/singup" element={<p>do you want to make account?</p>}/>
+      </Routes>
     </div>
   );
 }

@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use('/login', memberRouter);
+app.use('/loginapi', memberRouter);
 
 sequelize.sync({ force: false })
   .then(() => {

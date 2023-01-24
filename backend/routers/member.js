@@ -44,7 +44,7 @@ router.route('/check')
   }
 });
 
-router.route('/out')
+router.route('/logout')
 .get(async (req, res) => {
   try {
     const token = req.cookies.jwt;
