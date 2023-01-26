@@ -3,6 +3,7 @@ const path = require('path');
 const cors = require('cors');
 const { sequelize } = require('./models');
 const memberRouter = require('./routers/member');
+const writeRouter = require('./routers/write');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
@@ -23,6 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use('/loginapi', memberRouter);
+app.use('/writeapi', writeRouter);
 
 sequelize.sync({ force: false })
   .then(() => {

@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import LoginPage from "./components/LoginPage";
 import Main from "./components/Main";
+import Write from "./components/Write";
 import axios from "axios";
 import { Routes, Route } from "react-router-dom";
 
@@ -28,6 +29,7 @@ function App() {
         <Route path="/" element={<Main islogined={islogined} setIsLogined={setIsLogined} nickName={nickName} setNickName={setNickName}/>}/>
         <Route path="/login" element={<LoginPage islogined={islogined} setIsLogined={setIsLogined} nickName={nickName} setNickName={setNickName}/>}/>
         <Route path="/singup" element={<p>do you want to make account?</p>}/>
+        <Route path="/write" element={<Write nickName={nickName}/>}/>
       </Routes>
     </div>
   );

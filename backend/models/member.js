@@ -33,7 +33,9 @@ class Memeber extends Sequelize.Model{
             collate:'utf8_general_ci'
         });
     }
-    static associate(db) {}
+    static associate(db) {
+      db.Member.hasMany(db.Article, {foreignKey:'writer', sourceKey:'id', allowNull:false});
+    }
 }
 
 module.exports = Memeber;
