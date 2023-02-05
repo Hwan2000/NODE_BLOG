@@ -14,7 +14,7 @@ class Memeber extends Sequelize.Model{
                 allowNull: false
               },
               password: {
-                type: Sequelize.STRING,
+                type: Sequelize.TEXT,
                 allowNull: false
               },
               nickname: {

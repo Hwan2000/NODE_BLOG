@@ -1,20 +1,22 @@
 const express = require('express');
-const path = require('path');
+const session = require('express-session');
 const cors = require('cors');
+const passport = require('passport');
 const { sequelize } = require('./models');
-const memberRouter = require('./routers/member');
+//const memberRouter = require('./routers/member');
+const LoiginRouter = require('./routers/login');
 const writeRouter = require('./routers/write');
+const signUpRouter = require('./routers/signUp');
 const cookieParser = require('cookie-parser');
+
 require('dotenv').config();
 
 const app = express();
-
 const PORT = process.env.port || 5000;
 
 app.use(
   cors({
     origin: ["http://localhost:3000"],
-    methods: ["GET", "POST"],
     credentials: true,
   })
 );
@@ -22,9 +24,20 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(
+  session({
+    secret:"secretcode",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
-app.use('/loginapi', memberRouter);
+app.use('/loginapi', LoiginRouter);
+//app.use('/loginapi', memberRouter);
 app.use('/writeapi', writeRouter);
+app.use('/signupapi', signUpRouter);
 
 sequelize.sync({ force: false })
   .then(() => {

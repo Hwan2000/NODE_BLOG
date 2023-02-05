@@ -16,8 +16,8 @@ const LoginPage = ({islogined, setIsLogined, nickName, setNickName}) => {
             email: user.email, password: user.password
         })
         .then(({data})=>{
-            const {message, nickname} = data;
-            if(nickname===''){
+            const {success, nickname, message} = data;
+            if(success===false){
                 setError(message);
             } else {
                 setNickName(nickname);
@@ -43,7 +43,7 @@ const LoginPage = ({islogined, setIsLogined, nickName, setNickName}) => {
             <br/>
             <button type="submit" onClick={onSubmitHandler}>Submit</button>
             </form>
-            <Link to="/singup"><p>you don't have account?</p></Link>
+            <Link to="/signup"><p>you don't have account?</p></Link>
             <p>{error}</p>
         </div>
     )
