@@ -3,6 +3,7 @@ import LoginPage from "./components/LoginPage";
 import MainPage from "./components/MainPage";
 import WritePage from "./components/WritePage";
 import SignUpPage from "./components/SignUpPage";
+import ArticelPage from "./components/ArticlePage";
 import axios from "axios";
 import { Routes, Route } from "react-router-dom";
 
@@ -32,6 +33,7 @@ function App() {
         <Route path="/login" element={<LoginPage islogined={islogined} setIsLogined={setIsLogined} nickName={nickName} setNickName={setNickName}/>}/>
         <Route path="/write" element={<WritePage nickName={nickName}/>}/>
         <Route path="/signup" element={<SignUpPage/>}/>
+        <Route path="/article/:id" element={<ArticelPage/>}/>
       </Routes>
     </div>
   );

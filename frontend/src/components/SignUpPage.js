@@ -23,7 +23,7 @@ function SignUp () {
         })
         .then(({data})=>{
             if(data === 'complete'){
-                navigate("/");
+                navigate("/login");
             } 
         })
     }

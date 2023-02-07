@@ -50,7 +50,7 @@ class Article extends Sequelize.Model{
         })
     }
     static associate(db) {
-        db.Article.belongsTo(db.Member, {foreignKey:'writer', targetkey:'id', allowNull:false});
+        db.Article.belongsTo(db.Member, {foreignKey:'writer', targetkey:'nickname', allowNull:false});
     }
 }
 

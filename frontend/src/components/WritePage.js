@@ -1,21 +1,22 @@
 import { useState } from "react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 
 function Write ({nickName}) {
 
     const [title, setTitle] = useState('');
     const [contents, setContents] = useState('');
+    const navigate = useNavigate();
 
     const handleOnSubmit = async(e)=>{
         e.preventDefault();
         try{
-            const res = await axios.post('http://localhost:5000/writeapi',{
+            await axios.post('http://localhost:5000/writeapi',{
                 title:title,
                 contents:contents,
                 writer:nickName
             })
-            console.log(res);
+            navigate("/");
         } catch(error){
             console.error(error);
         }

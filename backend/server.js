@@ -7,6 +7,7 @@ const { sequelize } = require('./models');
 const LoiginRouter = require('./routers/login');
 const writeRouter = require('./routers/write');
 const signUpRouter = require('./routers/signUp');
+const articleRouter = require('./routers/article');
 const cookieParser = require('cookie-parser');
 
 require('dotenv').config();
@@ -38,6 +39,7 @@ app.use('/loginapi', LoiginRouter);
 //app.use('/loginapi', memberRouter);
 app.use('/writeapi', writeRouter);
 app.use('/signupapi', signUpRouter);
+app.use('/articleapi', articleRouter);
 
 sequelize.sync({ force: false })
   .then(() => {

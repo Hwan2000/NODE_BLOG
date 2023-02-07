@@ -34,7 +34,7 @@ class Memeber extends Sequelize.Model{
         });
     }
     static associate(db) {
-      db.Member.hasMany(db.Article, {foreignKey:'writer', sourceKey:'id', allowNull:false});
+      db.Member.hasMany(db.Article, {foreignKey:'writer', sourceKey:'nickname', allowNull:false});
     }
 }
 
