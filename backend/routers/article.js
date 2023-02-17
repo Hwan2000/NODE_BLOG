@@ -12,7 +12,7 @@ const Article = require('../models/article');
         const articles = await Article.findAll({
             limit,
             offset,
-            order:[['id','ASC']],
+            order:[['id','DESC']],
             attributes:['id','title','likes','dislikes','comments_count','writer'],
         })
         res.status(200).json({articles});

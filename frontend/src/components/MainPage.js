@@ -45,8 +45,6 @@ const Main = ({islogined, nickName, setIsLogined, setNickName}) => {
         getPages();
       }, [pageNum]);
 
-      console.log(articleList);
-
     return(
         <>
             <h1>Main Page</h1>
@@ -54,19 +52,30 @@ const Main = ({islogined, nickName, setIsLogined, setNickName}) => {
             {islogined ? <button onClick={logOut}>logout</button>:<Link to="/login"><button>login</button></Link>}
             {islogined ? <Link to="/write"><button>글쓰기</button></Link>: <></>}
             <br/>
-            {articleList.map((article) => (
-                <Link to={`/article/${article.id}`} key={article.id}>
-                <br/>
-                <span>{article.title}</span>
-                <span> {article.likes}</span>
-                <span> {article.dislikes}</span>
-                <span> {article.comments_count}</span>
-                <span> {article.writer}</span>
-                <br/>
-                </Link>
-            ))}
             <br/>
-            <button onClick={pageRight}>&lt;</button>{pageNum}<button onClick={pageLeft}>&gt;</button>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Likes</th>
+                        <th>Dislikes</th>
+                        <th>Comments</th>
+                        <th>Writer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {articleList.map((article, index) => 
+                    <tr key={index}>
+                        <td><Link to={`/article/${article.id}`} key={article.id}>{article.title}</Link></td>
+                        <td>{article.likes}</td>
+                        <td>{article.dislikes}</td>
+                        <td>{article.comments_count}</td>
+                        <td>{article.writer}</td>
+                    </tr>)}
+                </tbody>
+            </table>
+            <br/>
+            <button onClick={pageRight}>&lt;</button>page {pageNum}<button onClick={pageLeft}>&gt;</button>
         </>
     )
 }
